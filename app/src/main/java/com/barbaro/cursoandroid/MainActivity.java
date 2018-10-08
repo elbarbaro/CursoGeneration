@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.barbaro.cursoandroid.home.HomeActivity;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText editUser;

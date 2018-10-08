@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/update"
+        android:title="Actualizar"/>
+    <item
+        android:icon="@drawable/pencil"
+        android:id="@+id/create"
+        android:title="Crear"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/delete"
+        android:title="Eliminar"
+        app:showAsAction="always"/>
+</menu>
