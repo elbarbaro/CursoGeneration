@@ -2,6 +2,7 @@ package com.barbaro.cursoandroid;
 
 import android.Manifest;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -18,6 +19,9 @@ import com.barbaro.cursoandroid.home.HomeActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
+    public static final String file_name = "curso_android";
+    public static final String SESSION_KEY = "open_session";
+
     private static final int REQUEST_LOCATION = 9001;
 
     private EditText editUser;
@@ -27,6 +31,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        SharedPreferences preferences = getSharedPreferences(file_name, 0);
+        if(preferences.contains(SESSION_KEY)){
+            navigateHome();
+        }
 
         int permission = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
         if(permission != PackageManager.PERMISSION_GRANTED){
@@ -41,6 +50,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         Button btnLogin = findViewById(R.id.btnLogin);
         btnLogin.setOnClickListener(this);
+    }
+
+    private void navigateHome() {
+        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override
@@ -94,8 +109,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(user.equals("barbaro") && pass.equals("123456")){
             //NAVEGAR A SEGUNDA PANTALLA
             showMessage(getString(R.string.tag_success_login));
-            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-            startActivity(intent);
+            savePreference();
+            navigateHome();
         } else {
             showMessage(getString(R.string.tag_fail_login));
         }
@@ -108,5 +123,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void savePreference(){
+        SharedPreferences preferences = getSharedPreferences(file_name, 0);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putBoolean(SESSION_KEY, true);
+        editor.apply();
     }
 }
