@@ -1,9 +1,13 @@
 package com.barbaro.cursoandroid.home;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -11,6 +15,7 @@ import android.widget.Toast;
 import com.barbaro.cursoandroid.MessageRepository;
 import com.barbaro.cursoandroid.R;
 import com.barbaro.cursoandroid.home.adapters.MessageAdapter;
+import com.barbaro.cursoandroid.profile.PhotoActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -39,7 +44,7 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.create:
-                showMessage("Crear");
+                takePhoto();
                 return true;
             case R.id.update:
                 showMessage("Actualizar");
@@ -52,7 +57,17 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    private void takePhoto() {
+        Intent intent = new Intent(HomeActivity.this, PhotoActivity.class);
+        startActivity(intent);
+    }
+
     private void showMessage(String action) {
         Toast.makeText(this, action, Toast.LENGTH_LONG).show();
+    }
+
+    private void setImage(Bitmap image) {
+        //ImageView img = findViewById(R.id.imgPhoto);
+        //img.setImageBitmap(image);
     }
 }
